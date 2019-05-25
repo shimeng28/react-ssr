@@ -1,0 +1,53 @@
+{
+  "name": "react-ssr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:service\"  \"npm run dev:build:server\" \"npm run dev:build:client\" \"npm run dev:start\" ",
+    "dev:start": "nodemon --inspect --watch src --exec node \"./dist/bundle.js\"",
+    "dev:build:server": "webpack --config ./build/webpack.common.js --env.side=server --watch",
+    "dev:build:client": "webpack --config ./build/webpack.common.js --env.side=client --watch",
+    "dev:service": "nodemon ./services/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "axios": "^0.18.0",
+    "clean-webpack-plugin": "^2.0.1",
+    "concurrently": "^4.1.0",
+    "core-js": "^2.6.5",
+    "css-loader": "^2.1.1",
+    "express-http-proxy": "^1.5.1",
+    "file-loader": "^3.0.1",
+    "koa": "^2.7.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "nodemon": "^1.18.11",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.1",
+    "react-redux": "^7.0.3",
+    "react-router-config": "^5.0.0",
+    "react-router-dom": "^5.0.0",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1",
+    "webpack-dev-server": "^3.3.1",
+    "webpack-merge": "^4.2.1",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-stage-0": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "isomorphic-style-loader": "^5.0.1"
+  }
+}
