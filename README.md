@@ -13,4 +13,8 @@ react SSR
 4. 页面数据通过react-router端loadData方法在服务端请求数据，生成后注入到HTML中，放到了window.context，作为浏览器端store端默认数据。
 
 5. 浏览器端代码会在ComponentDidMount检查，页面数据不存在时会再次请求。这是因为只有第一次页面请求是SSR渲染，之后在浏览器中的跳转都是单页应用的形式
+
+6. css有两种解决方案，一种是server端打包的时候通过isomorphic-style-loader处理CSS，之后可以通过_getCss方法获取CSS字符串，将css字符串赋值给
+   context，之后在返回给前端的时候注入到html中。另一种是通过MiniCssExtractPlugin将CSS抽离出单独到文件，使用HtmlWebpackPlugin的时候引入到
+   html模版文件中。
     
