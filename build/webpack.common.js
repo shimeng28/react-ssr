@@ -16,7 +16,7 @@ const makePlugins = () => {
     new MiniCssExtractPlugin({
       filename: isProduction ? '[name].[hash].css' : '[name].css',
       chunkFilename: isProduction ? '[id].[hash].css' : '[id].css'
-    })
+    }),
   ];
 
   return plugins;
@@ -69,6 +69,28 @@ const commonConfig = {
       }
     ],
   }, 
+  optimization: {
+    usedExports: true,
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'main',
+          chunks: 'all',
+          priority: -10,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    },
+    runtimeChunk: {
+      name: entrypoint => `runtime~${entrypoint.name}`
+    }
+  },
   plugins: makePlugins(),
   resolve: {
     alias: {

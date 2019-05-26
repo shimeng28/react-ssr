@@ -1,8 +1,8 @@
 import React from 'react';
 import Header from 'Components/Header';
 import { renderRoutes } from 'react-router-config';
-import styles from './style.css';
-import withStyle from '../../withStyle';
+import styles from './index.less';
+// import withStyle from '../../withStyle';
 
 const App = (props) => {
   return (
@@ -15,4 +15,5 @@ const App = (props) => {
   );
 }
 
-export default withStyle(App, styles);
+// export default withStyle(App, styles);
+export default App;

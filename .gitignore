@@ -2,3 +2,4 @@
 /dist
 /static
 **/.DS_Store
+**/*.log

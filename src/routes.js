@@ -1,6 +1,9 @@
-import Home from 'Container/Home';
-import NotFound from 'Container/NotFound';
 import App from 'Components/App';
+import Home from 'Container/Home';
+import Login from 'Container/Login';
+import NotFound from 'Container/NotFound';
+
+
 
 export default [
   {
@@ -14,6 +17,12 @@ export default [
         exact: true,
         loadData: Home.loadData,
         key: 'home',
+      },
+      {
+        path: '/login',
+        component: Login,
+        exact: true,
+        key: 'login',
       },
       {
         component: NotFound

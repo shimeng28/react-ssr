@@ -11,7 +11,8 @@ class NotFound extends Component {
   render() {
     return (
       <div>
-        404, Sory, page not found
+        404, 页面走丢了
+        <button><a href="/">返回首页</a></button>
       </div>
     )
   }

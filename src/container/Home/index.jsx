@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { getHomeList } from './store/actions';
-import styles from './style.less';
-import withStyles from '../../withStyle';
+import styles from './index.less';
+// import withStyles from '../../withStyle';
 // 同构 一套React代码，在服务端执行一次，再在客户端执行一次
 
 class Home extends Component {
@@ -25,12 +25,12 @@ class Home extends Component {
         <Helmet>
           <title>这是首页</title>
         </Helmet>
-        <div className={styles.name}>Welcome To Home, this is {name}</div>
+        <div className={styles.name}>欢迎回到首页，{name}</div>
         {
           this.getList()
         }
         <button
-          onClick={ () => alert('alert') }
+          onClick={ () => alert('不要乱点') }
         >onClick</button>
       </div>
     );
@@ -48,7 +48,8 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-const ExportHome = connect(mapStateToProps, mapDispatchToProps)(withStyles(Home, styles));
+// const ExportHome = connect(mapStateToProps, mapDispatchToProps)(withStyles(Home, styles));
+const ExportHome = connect(mapStateToProps, mapDispatchToProps)(Home, styles);
 ExportHome.loadData = (store) => {
   // 这个函数，负责在服务器端渲染之前，把这个路由需要端数据提前加载好
   return store.dispatch(getHomeList());
