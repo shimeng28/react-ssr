@@ -1,4 +1,6 @@
 import React from 'react';
+import Loadable from 'react-loadable';
+import { getBundles } from 'react-loadable/webpack'
 import path from 'path';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
@@ -7,6 +9,7 @@ import { Provider } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import fileTools from '../util/fileTools';
 import routes from '../../routes';
+import stats from '../../../public/react-loadable.json';
 
 
 const getHtml = async ({
@@ -26,20 +29,28 @@ const getHtml = async ({
 const render = async (ctx, next) => {
   
     const context = {
-      // css: []
+      // css: [],
+      modules: [],
     };
     const content = renderToString((
-      <Provider store={ ctx.store }>
-        <StaticRouter location={ctx.path} context={context}>
-          <div>
-            { 
-              renderRoutes(routes)
-            }
-          </div>
-        </StaticRouter>
-      </Provider>
+      <Loadable.Capture 
+        report={ moduleName => context.modules.push(moduleName)} 
+      >
+        <Provider store={ ctx.store }>
+          <StaticRouter location={ctx.path} context={context}>
+            <div>
+              { 
+                renderRoutes(routes)
+              }
+            </div>
+          </StaticRouter>
+        </Provider>
+      </Loadable.Capture>
     ));
 
+    const bundles = getBundles(stats, context.modules);
+    const cssList = bundles.filter(bundle => /\.css$/.test(bundle.file));
+    const jsList = bundles.filter(bundle => !/\.css$/.test(bundle.file));
     const helmet = Helmet.renderStatic();
     // 当使用isomorphic-style-loader 可以使用_getCss()获取CSS字符串
     // const cssStr = context.css.length ? context.css.join('\n') : '';
@@ -47,6 +58,9 @@ const render = async (ctx, next) => {
     const helmetData = `
       ${helmet.title.toString()}
       ${helmet.meta.toString()}
+      ${
+        cssList.map(bundle => `<link rel="stylesheet" type="text/css" href="/${bundle.file}" />`).join('')
+      }
     `;
     const injectData = `
       <script>
@@ -54,6 +68,9 @@ const render = async (ctx, next) => {
           state: ${JSON.stringify(ctx.store.getState())}
         };
       </script>
+      ${
+        jsList.map(bundle => `<script src="/${bundle.file}"></script>`).join('')
+      }
     `;
   
 

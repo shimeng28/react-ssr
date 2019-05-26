@@ -1,31 +1,49 @@
-import App from 'Components/App';
-import Home from 'Container/Home';
-import Login from 'Container/Login';
-import NotFound from 'Container/NotFound';
+import Loadable from 'react-loadable';
 
+const loading = () => <div>Loading...</div>;
+
+const WrapApp = Loadable({
+  loader: () => import('Components/App'),
+  loading,
+});
+
+const WrapHome = Loadable({
+  loader: () => import('Container/Home'),
+  loading,
+});
+
+const WrapLogin = Loadable({
+  loader: () => import('Container/Login'),
+  loading,
+});
+
+const WrapNotFound = Loadable({
+  loader: () => import('Container/NotFound'),
+  loading,
+});
 
 
 export default [
   {
     path: '/',
-    component: App,
-    loadData: App.loadData,
+    component: WrapApp,
+    // loadData: WrapApp.loadData,
     routes: [
       {
         path: '/',
-        component: Home,
+        component: WrapHome,
         exact: true,
-        loadData: Home.loadData,
+        // loadData: WrapHome.loadData,
         key: 'home',
       },
       {
         path: '/login',
-        component: Login,
+        component: WrapLogin,
         exact: true,
         key: 'login',
       },
       {
-        component: NotFound
+        component: WrapNotFound
       }
     ]
   }

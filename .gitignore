@@ -3,3 +3,4 @@
 /static
 **/.DS_Store
 **/*.log
+public/react-loadable.json

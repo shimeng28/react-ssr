@@ -7,7 +7,9 @@ class Header extends Component {
 
   render() {
     return (
-      <div className={ styles.header }>
+      <div 
+        className={ styles.header }
+      >
         <Link to="/">首页</Link>
         <Link to="/login">登陆页</Link>
       </div>

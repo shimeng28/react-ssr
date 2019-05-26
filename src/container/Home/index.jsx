@@ -25,13 +25,12 @@ class Home extends Component {
         <Helmet>
           <title>这是首页</title>
         </Helmet>
-        <div className={styles.name}>欢迎回到首页，{name}</div>
+        <div 
+          className={styles.name}
+        >欢迎回到首页，{name}</div>
         {
           this.getList()
         }
-        <button
-          onClick={ () => alert('不要乱点') }
-        >onClick</button>
       </div>
     );
   }

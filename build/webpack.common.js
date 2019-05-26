@@ -1,7 +1,7 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ServerMiniCssExtractPlugin = require('./utils/serverMiniCssExtractPlugin');
 
 const clientConfig = require('./webpack.client.js');
 const serverConfig = require('./webpack.server.js');
@@ -13,7 +13,7 @@ const makePlugins = () => {
       verbose: true,
       cleanOnceBeforeBuildPatterns: ['**/*'],
     }),
-    new MiniCssExtractPlugin({
+    new ServerMiniCssExtractPlugin({
       filename: isProduction ? '[name].[hash].css' : '[name].css',
       chunkFilename: isProduction ? '[id].[hash].css' : '[id].css'
     }),
@@ -23,15 +23,16 @@ const makePlugins = () => {
 };
 
 const commonConfig = {
-  mode: isProduction ? 'production' : 'development',
-  devtool: isProduction ? 'source-map' : 'inline-cheap-module-eval-source-map',
+  // mode: isProduction ? 'production' : 'development',
+  // devtool: isProduction ? 'source-map' : 'inline-cheap-module-source-map',
   module: {
     rules: [
       {
         test: /\.(less|css)$/,
         use: [ 
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: ServerMiniCssExtractPlugin.loader,
+            // loader: 'null-loader',
             options: {
               hmr: !isProduction,
               reloadAll: true,
@@ -42,7 +43,7 @@ const commonConfig = {
             options: {
               importLoaders: 2,
               modules: true,
-              localIdentName: '[path][name]__[local]--[hash:base64:5]'
+              localIdentName: '[local]--[hash:base64:5]'
             }
           },
           'less-loader',
@@ -69,28 +70,6 @@ const commonConfig = {
       }
     ],
   }, 
-  optimization: {
-    usedExports: true,
-    splitChunks: {
-      chunks: 'all',
-      cacheGroups: {
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'main',
-          chunks: 'all',
-          priority: -10,
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
-        }
-      }
-    },
-    runtimeChunk: {
-      name: entrypoint => `runtime~${entrypoint.name}`
-    }
-  },
   plugins: makePlugins(),
   resolve: {
     alias: {
@@ -103,14 +82,12 @@ const commonConfig = {
   }
 };
 
-if (!isProduction) {
-
-}
-
 
 module.exports = env => {
   console.log(env);
-  if (env.side === 'client') {
+  const isClient = env.side === 'client';
+
+  if (isClient) {
     return merge(commonConfig, clientConfig);
   }
   return merge(commonConfig, serverConfig);

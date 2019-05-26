@@ -1,9 +1,10 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import { Provider } from 'react-redux';
 import { getClientStore } from 'Store';
+import Loadable from 'react-loadable';
 import routes from '../routes';
 
 const store = getClientStore();
@@ -22,6 +23,6 @@ const App = () => {
   );
 };
 
-
-
-ReactDom.hydrate(<App />, document.getElementById('root'));
+Loadable.preloadReady().then(() => {
+  hydrate(<App />, document.querySelector('#root'));
+});
