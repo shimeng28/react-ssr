@@ -22,5 +22,5 @@ react SSR
 支持：
 1. 支持redux数据流。
 
-2. webpack支持静态资源字体，图片，Less
+2. webpack支持静态资源，字体，图片，支持Less
   
