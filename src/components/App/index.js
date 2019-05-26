@@ -1,8 +1,8 @@
 import React from 'react';
 import Header from 'Components/Header';
 import { renderRoutes } from 'react-router-config';
-import styles from './global.css';
-import withStyle from './withStyle';
+import styles from './style.css';
+import withStyle from '../../withStyle';
 
 const App = (props) => {
   return (

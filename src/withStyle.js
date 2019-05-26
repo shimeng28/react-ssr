@@ -10,7 +10,7 @@ export default (DecoratedComponent, styles) => {
         staticContext
       } = this.props;
       if (staticContext) {
-        staticContext.css.push(styles._getCss());
+        // staticContext.css.push(styles._getCss());
       }
     }
 

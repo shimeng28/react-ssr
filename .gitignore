@@ -1,3 +1,4 @@
 /node_modules
 /dist
-/public
+/static
+**/.DS_Store

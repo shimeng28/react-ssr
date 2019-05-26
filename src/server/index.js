@@ -1,30 +1,28 @@
 import Koa from 'koa';
-import { render } from './util';
 import path from 'path';
 import Router from 'koa-router';
-// import proxy from 'express-http-proxy';
+import loadData from './renderStatic/loadData';
+import render from './renderStatic/render';
+
 
 const app = new Koa();
-app.use(require('koa-static')(path.resolve(process.cwd(), './public')), {
+
+app.use(require('koa-static')(path.resolve(process.cwd(), './static')), {
   maxage: 60 * 60 * 24
 });
+
+
 
 const router = new Router();
 
 router.get('*', async (ctx, next) => {
-  const { context, html } = await render(ctx, next);
-  if (context.action === 'REPLACE') {
-    ctx.redirect(301, context.url);
-  } else if (context.NotFound) {
-    ctx.body = html;
-  } else {
-    ctx.body = html;
-  } 
+  await loadData(ctx, next);
+  await render(ctx, next);
 })
 
 app.use(router.routes())
   .use(router.allowedMethods());
 
-app.listen(80, () => {
+app.listen(8001, () => {
   console.log('app is starting at 80');
 })

@@ -1,6 +1,6 @@
-import Home from './container/Home';
-import NotFound from './container/NotFound';
-import App from './app';
+import Home from 'Container/Home';
+import NotFound from 'Container/NotFound';
+import App from 'Components/App';
 
 export default [
   {

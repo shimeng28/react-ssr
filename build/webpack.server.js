@@ -1,6 +1,6 @@
 const path = require('path');
 const externals = require('webpack-node-externals');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+
 
 module.exports = {
   target: 'node',
@@ -11,22 +11,17 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.css?$/,
-        use: [ 'isomorphic-style-loader', {
-          loader: 'css-loader',
-          options: {
-            modules: true,
-            localIdentName: '[path][name]__[local]--[hash:base64:5]'
-          }
-        } ]
-      }
+      // {
+      //   test: /\.css?$/,
+      //   use: [ 'isomorphic-style-loader', {
+      //     loader: 'css-loader',
+      //     options: {
+      //       modules: true,
+      //       localIdentName: '[path][name]__[local]--[hash:base64:5]'
+      //     }
+      //   } ]
+      // }
     ],
   }, 
   externals: [ externals() ],
-  plugins: [
-    new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [ path.join(process.cwd(), '/dist') ],
-    })
-  ],
 };
