@@ -18,3 +18,9 @@ react SSR
    context，之后在返回给前端的时候注入到html中。另一种是通过MiniCssExtractPlugin将CSS抽离出单独到文件，使用HtmlWebpackPlugin的时候引入到
    html模版文件中。
     
+
+支持：
+1. 支持redux数据流。
+
+2. webpack支持静态资源字体，图片，Less
+  
