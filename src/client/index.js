@@ -5,7 +5,6 @@ import { renderRoutes } from 'react-router-config';
 import { Provider } from 'react-redux';
 import { getClientStore } from 'Store';
 import routes from '../routes';
-import '../img/favicon.ico';
 
 const store = getClientStore();
 

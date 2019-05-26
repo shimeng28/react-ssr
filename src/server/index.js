@@ -23,6 +23,6 @@ router.get('*', async (ctx, next) => {
 app.use(router.routes())
   .use(router.allowedMethods());
 
-app.listen(8001, () => {
+app.listen(80, () => {
   console.log('app is starting at 80');
 })

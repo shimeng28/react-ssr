@@ -26,19 +26,6 @@ module.exports = {
       //     'postcss-loader'
       //   ]
       // },
-      {
-        test: /\.(ico)$/i,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              name: '[name].[ext]',
-              limit: 50,
-              outputPath: '/',
-            }
-          }
-        ]
-      }
     ]
   },
   plugins: [

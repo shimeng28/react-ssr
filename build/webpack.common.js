@@ -28,7 +28,7 @@ const commonConfig = {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.(less|css)$/,
         use: [ 
           {
             loader: MiniCssExtractPlugin.loader,
@@ -40,19 +40,33 @@ const commonConfig = {
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 1,
+              importLoaders: 2,
               modules: true,
               localIdentName: '[path][name]__[local]--[hash:base64:5]'
             }
           },
+          'less-loader',
           'postcss-loader'
         ]
       },
       {
-        test: /\.js?$/,
+        test: /\.(js|jsx)?$/,
         use: 'babel-loader',
         exclude: /node_modules/,
       },
+      {
+        test: /\.(ico|png|svg|jpg|gif|woff|woff2|eot|ttf|otf)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              name: isProduction ? '[hash].[ext]' : '[name].[ext]',
+              limit: 8192,
+              outputPath: 'assert',
+            }
+          }
+        ]
+      }
     ],
   }, 
   plugins: makePlugins(),

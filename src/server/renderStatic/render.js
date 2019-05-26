@@ -20,7 +20,6 @@ const getHtml = async ({
   html = html.replace(/<!-- meta data -->/g, helmetData);
   html = html.replace(/<!-- ssr content -->/g, content);
   html = html.replace(/<!-- inject data -->/g, injectData);
-  console.log('html...', html);
   return Promise.resolve(html);
 }
 

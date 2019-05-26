@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { getHomeList } from './store/actions';
-import styles from './style.css';
+import styles from './style.less';
 import withStyles from '../../withStyle';
 // 同构 一套React代码，在服务端执行一次，再在客户端执行一次
 
@@ -25,7 +25,7 @@ class Home extends Component {
         <Helmet>
           <title>这是首页</title>
         </Helmet>
-        <div>Welcome To Home, this is {name}</div>
+        <div className={styles.name}>Welcome To Home, this is {name}</div>
         {
           this.getList()
         }
