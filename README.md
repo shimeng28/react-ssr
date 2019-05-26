@@ -22,5 +22,9 @@ react SSR
 支持：
 1. 支持redux数据流。
 
-2. webpack支持静态资源，字体，图片，支持Less、source-map
+2. webpack支持静态资源，字体，图片，支持Less、source-map、支持code spliting
+
+
+遇到的坑：
+MiniCssExtractPlugin 在服务端会报错，document未定义。解决方法： 写一个子类继承MiniCssExtractPlugin，重写 getCssChunkObject方法
   
