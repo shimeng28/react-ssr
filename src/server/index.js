@@ -1,5 +1,4 @@
 import Koa from 'koa';
-import path from 'path';
 import Router from 'koa-router';
 import Loadable from 'react-loadable';
 import config from '../../config/index';

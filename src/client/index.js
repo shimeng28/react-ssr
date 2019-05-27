@@ -24,5 +24,5 @@ const App = () => {
 };
 
 Loadable.preloadReady().then(() => {
-  hydrate(<App />, document.querySelector('#root'));
+  hydrate(<App />, document.getElementById('root'));
 });

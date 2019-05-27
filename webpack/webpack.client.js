@@ -33,52 +33,43 @@ const config = {
     ]
   },
   optimization: {
-    splitChunks: {
-      chunks: 'all',
-      cacheGroups: {
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'main',
-          chunks: 'all',
-          priority: -10,
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
-        }
-      }
-    },
-    runtimeChunk: {
-      name: entrypoint => `runtime~${entrypoint.name}`
-    }
+    // splitChunks: {
+    //   cacheGroups: {
+    //     commons: {
+    //       test: /[\\/]node_modules[\\/]/,
+    //       name: 'vendors',
+    //       priority:  10,
+    //     }
+    //   }
+    // },
   },
   plugins: [
     new HtmlWebpackPlugin({
       filename: '~tmp.html',
       template: path.resolve(process.cwd(), './public/index.html'),
-      favicon: path.resolve(process.cwd(), './public/favicon.ico')
+      favicon: path.resolve(process.cwd(), './public/favicon.ico'),
+      chunks: [ 'main' ]
     }),
     new reactLoadablePlugin({
       filename: path.resolve(process.cwd(), './public/react-loadable.json'),
     }),
   ],
 };
-const plugins = config.plugins;
-const files = fs.readdirSync(path.resolve(process.cwd(), './build/dll'));
+// const plugins = config.plugins;
+// const files = fs.readdirSync(path.resolve(process.cwd(), './build/dll'));
 
-files.forEach(file => {
-  if (/\.dll\.js$/.test(file)) {
-    plugins.push(new AddAssetHtmlWebpackPlugin({
-      filepath: path.resolve(process.cwd(), './build/dll', file),
-    }));
-  }
+// files.forEach(file => {
+//   if (/\.dll\.js$/.test(file)) {
+//     plugins.push(new AddAssetHtmlWebpackPlugin({
+//       filepath: path.resolve(process.cwd(), './build/dll', file),
+//     }));
+//   }
 
-  if (/\.manifest\.json$/.test(file)) {
-    plugins.push(new webpack.DllReferencePlugin({
-      manifest: path.resolve(process.cwd(), './build/dll', file),
-    }));
-  }
-});
+//   if (/\.manifest\.json$/.test(file)) {
+//     plugins.push(new webpack.DllReferencePlugin({
+//       manifest: path.resolve(process.cwd(), './build/dll', file),
+//     }));
+//   }
+// });
 
 module.exports = config;

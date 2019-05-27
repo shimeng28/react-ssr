@@ -50,7 +50,7 @@ const render = async (ctx, next) => {
 
     const bundles = getBundles(stats, context.modules);
     const cssList = bundles.filter(bundle => /\.css$/.test(bundle.file));
-    const jsList = bundles.filter(bundle => !/\.css$/.test(bundle.file));
+    const jsList = bundles.filter(bundle => /\.js$/.test(bundle.file));
     const helmet = Helmet.renderStatic();
     // 当使用isomorphic-style-loader 可以使用_getCss()获取CSS字符串
     // const cssStr = context.css.length ? context.css.join('\n') : '';

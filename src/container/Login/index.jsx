@@ -6,6 +6,7 @@ import styles from './index.less';
 
 class Login extends Component {
   componentDidMount() {
+    console.log('aaaa');
     // if (!this.props.list.length) {
     //   this.props.getHomeList();
     // }
@@ -18,7 +19,10 @@ class Login extends Component {
         <Helmet>
           <title>这是登陆页</title>
         </Helmet>
-        <h1 className={styles.name}>这是登陆页</h1>
+        <h1 
+          className={styles.name}
+          onClick={ () => console.log('aaa') }
+        >这是登陆页</h1>
       </div>
     );
   }

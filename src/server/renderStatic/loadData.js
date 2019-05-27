@@ -8,16 +8,19 @@ const loadData = async (ctx, next) => {
   // 如果用户访问/ 路径，我们就拿home组件到异步数据
 
   const store = getStore(ctx, next);
-  const matchedRoutes = matchRoutes(routes, ctx.path);
   ctx.store = store;
-  const promises = [];
-  matchedRoutes.forEach(item => {
-    if (item.route.loadData) {
-      const promise = new Promise((resolve, reject) => {
-        item.route.loadData(store).then(resolve).catch(resolve);
-      });
-      promises.push(promise);
-    }
+
+
+  const matchedRoutes = matchRoutes(routes, ctx.path).map(({ route }) => !route.component.preload ? route.component : route.component.preload().then(res => res.default));
+
+  const loadedActions = await Promise.all(matchedRoutes);
+  const promises = loadedActions.map(component => {
+    const promise = new Promise((resolve, reject) => {
+      component.loadData
+      ? component.loadData(store).then(resolve).catch(resolve)
+      : resolve()
+    });
+    return promise;
   });
 
 
