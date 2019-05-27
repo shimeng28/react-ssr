@@ -2,13 +2,14 @@ import Koa from 'koa';
 import path from 'path';
 import Router from 'koa-router';
 import Loadable from 'react-loadable';
+import config from '../../config/index';
 import loadData from './renderStatic/loadData';
 import render from './renderStatic/render';
 
 
 const app = new Koa();
 
-app.use(require('koa-static')(path.resolve(process.cwd(), './static')), {
+app.use(require('koa-static')(config.staticPath), {
   // maxage: 60 * 60 * 24
 });
 

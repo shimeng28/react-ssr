@@ -1,14 +1,17 @@
 const path = require('path');
+const fs = require('fs');
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
 // const isProduction = process.env.NODE_ENV === 'production';
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const reactLoadablePlugin = require('react-loadable/webpack').ReactLoadablePlugin;
+const webpack = require('webpack');
+const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
 
-module.exports = {
+const config = {
   entry: './src/client/index.js',
   output: {
     filename: 'index.js',
-    path: path.resolve(__dirname, '../static')
+    path: path.resolve(process.cwd(), './build/client')
   },
   module: {
     rules: [
@@ -30,7 +33,6 @@ module.exports = {
     ]
   },
   optimization: {
-    usedExports: true,
     splitChunks: {
       chunks: 'all',
       cacheGroups: {
@@ -53,7 +55,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: 'tmp.html',
+      filename: '~tmp.html',
       template: path.resolve(process.cwd(), './public/index.html'),
       favicon: path.resolve(process.cwd(), './public/favicon.ico')
     }),
@@ -62,3 +64,21 @@ module.exports = {
     }),
   ],
 };
+const plugins = config.plugins;
+const files = fs.readdirSync(path.resolve(process.cwd(), './build/dll'));
+
+files.forEach(file => {
+  if (/\.dll\.js$/.test(file)) {
+    plugins.push(new AddAssetHtmlWebpackPlugin({
+      filepath: path.resolve(process.cwd(), './build/dll', file),
+    }));
+  }
+
+  if (/\.manifest\.json$/.test(file)) {
+    plugins.push(new webpack.DllReferencePlugin({
+      manifest: path.resolve(process.cwd(), './build/dll', file),
+    }));
+  }
+});
+
+module.exports = config;

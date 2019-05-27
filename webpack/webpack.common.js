@@ -1,6 +1,8 @@
 const path = require('path');
 const merge = require('webpack-merge');
+
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+
 const ServerMiniCssExtractPlugin = require('./utils/serverMiniCssExtractPlugin');
 
 const clientConfig = require('./webpack.client.js');
@@ -23,8 +25,8 @@ const makePlugins = () => {
 };
 
 const commonConfig = {
-  // mode: isProduction ? 'production' : 'development',
-  // devtool: isProduction ? 'source-map' : 'inline-cheap-module-source-map',
+  mode: isProduction ? 'production' : 'development',
+  devtool: isProduction ? 'source-map' : 'inline-cheap-module-source-map',
   module: {
     rules: [
       {
@@ -81,6 +83,12 @@ const commonConfig = {
     extensions: [ '.js', '.jsx' ],
   }
 };
+
+if (!isProduction) {
+  commonConfig.optimization = {
+    usedExports: true
+  };
+}
 
 
 module.exports = env => {

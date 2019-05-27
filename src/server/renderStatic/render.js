@@ -1,12 +1,12 @@
 import React from 'react';
 import Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack'
-import path from 'path';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import { Provider } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import config from '../../../config/index';
 import fileTools from '../util/fileTools';
 import routes from '../../routes';
 import stats from '../../../public/react-loadable.json';
@@ -17,9 +17,9 @@ const getHtml = async ({
   content,
   injectData
 }) => {
-  const tempPath = path.resolve(process.cwd(), './static/tmp.html');
+  const tmpPath = config.tmpPath;
 
-  let html = await fileTools.readFile(tempPath);
+  let html = await fileTools.readFile(tmpPath);
   html = html.replace(/<!-- meta data -->/g, helmetData);
   html = html.replace(/<!-- ssr content -->/g, content);
   html = html.replace(/<!-- inject data -->/g, injectData);

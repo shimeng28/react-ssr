@@ -7,7 +7,7 @@ module.exports = {
   entry: './src/server/index.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, '../dist')
+    path: path.resolve(process.cwd(), './build/server')
   },
   module: {
     rules: [
