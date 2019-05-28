@@ -4,7 +4,7 @@ react SSR
 技术栈 webpack + React + react-router + Redux + Redux-thunk + axios + koa2
 
 实现原理：
-1. react-router作为前后端路由，
+1. react-router-dom作为前后端路由，通过react-router-config支持多级路由
     
 2. 利用reactDom.renderToString在服务端生产HTML字符串，在浏览器通过ReactDom.hydrate将React代码重新执行一边
     
