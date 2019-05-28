@@ -1,9 +1,9 @@
 const path = require('path');
 const fs = require('fs');
-// const CleanWebpackPlugin = require('clean-webpack-plugin');
-// const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production';
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const reactLoadablePlugin = require('react-loadable/webpack').ReactLoadablePlugin;
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
 
@@ -15,35 +15,35 @@ const config = {
   },
   module: {
     rules: [
-      // {
-      //   test: /\.css$/,
-      //   use: [ 
-      //     'style-loader',
-      //     {
-      //       loader: 'css-loader',
-      //       options: {
-      //         importLoaders: 1,
-      //         modules: true,
-      //         localIdentName: '[path][name]__[local]--[hash:base64:5]'
-      //       }
-      //     },
-      //     'postcss-loader'
-      //   ]
-      // },
-    ]
-  },
-  optimization: {
-    // splitChunks: {
-    //   cacheGroups: {
-    //     commons: {
-    //       test: /[\\/]node_modules[\\/]/,
-    //       name: 'vendors',
-    //       priority:  10,
-    //     }
-    //   }
-    // },
-  },
+      {
+        test: /\.(less|css)$/,
+        use: [ 
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: !isProduction,
+              reloadAll: true,
+            }
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+              modules: true,
+              localIdentName: '[local]--[hash:base64:5]'
+            }
+          },
+          'postcss-loader',
+          'less-loader'
+        ]
+      },
+    ],
+  }, 
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: isProduction ? '[name].[hash].css' : '[name].css',
+      chunkFilename: isProduction ? '[id].[hash].css' : '[id].css'
+    }),
     new HtmlWebpackPlugin({
       filename: '~tmp.html',
       template: path.resolve(process.cwd(), './public/index.html'),
@@ -55,21 +55,21 @@ const config = {
     }),
   ],
 };
-// const plugins = config.plugins;
-// const files = fs.readdirSync(path.resolve(process.cwd(), './build/dll'));
+const plugins = config.plugins;
+const files = fs.readdirSync(path.resolve(process.cwd(), './build/dll'));
 
-// files.forEach(file => {
-//   if (/\.dll\.js$/.test(file)) {
-//     plugins.push(new AddAssetHtmlWebpackPlugin({
-//       filepath: path.resolve(process.cwd(), './build/dll', file),
-//     }));
-//   }
+files.forEach(file => {
+  if (/\.dll\.js$/.test(file)) {
+    plugins.push(new AddAssetHtmlWebpackPlugin({
+      filepath: path.resolve(process.cwd(), './build/dll', file),
+    }));
+  }
 
-//   if (/\.manifest\.json$/.test(file)) {
-//     plugins.push(new webpack.DllReferencePlugin({
-//       manifest: path.resolve(process.cwd(), './build/dll', file),
-//     }));
-//   }
-// });
+  if (/\.manifest\.json$/.test(file)) {
+    plugins.push(new webpack.DllReferencePlugin({
+      manifest: path.resolve(process.cwd(), './build/dll', file),
+    }));
+  }
+});
 
 module.exports = config;

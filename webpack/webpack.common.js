@@ -3,7 +3,6 @@ const merge = require('webpack-merge');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const ServerMiniCssExtractPlugin = require('./utils/serverMiniCssExtractPlugin');
 
 const clientConfig = require('./webpack.client.js');
 const serverConfig = require('./webpack.server.js');
@@ -14,11 +13,7 @@ const makePlugins = () => {
     new CleanWebpackPlugin({
       verbose: true,
       cleanOnceBeforeBuildPatterns: ['**/*'],
-    }),
-    new ServerMiniCssExtractPlugin({
-      filename: isProduction ? '[name].[hash].css' : '[name].css',
-      chunkFilename: isProduction ? '[id].[hash].css' : '[id].css'
-    }),
+    })
   ];
 
   return plugins;
@@ -29,29 +24,6 @@ const commonConfig = {
   devtool: isProduction ? 'source-map' : 'inline-cheap-module-source-map',
   module: {
     rules: [
-      {
-        test: /\.(less|css)$/,
-        use: [ 
-          {
-            loader: ServerMiniCssExtractPlugin.loader,
-            // loader: 'null-loader',
-            options: {
-              hmr: !isProduction,
-              reloadAll: true,
-            }
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 2,
-              modules: true,
-              localIdentName: '[local]--[hash:base64:5]'
-            }
-          },
-          'less-loader',
-          'postcss-loader'
-        ]
-      },
       {
         test: /\.(js|jsx)?$/,
         use: 'babel-loader',
