@@ -9,7 +9,7 @@
     "dev:start": "nodemon --inspect --watch src --exec node \"./build/server/bundle.js\"",
     "dev:build:server": "webpack --config ./webpack/webpack.common.js --env.side=server --watch",
     "dev:build:client": "webpack --config ./webpack/webpack.common.js --env.side=client --watch",
-    "dev:service": "nodemon ./services/server.js",
+    "dev:service": "nodemon ./api/server.js",
     "build:dll": "webpack --config ./webpack/webpack.dll.config.js"
   },
   "keywords": [],
@@ -22,6 +22,7 @@
     "express-http-proxy": "^1.5.1",
     "html-webpack-plugin": "^3.2.0",
     "koa": "^2.7.0",
+    "koa-proxies": "^0.8.1",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "nodemon": "^1.18.11",

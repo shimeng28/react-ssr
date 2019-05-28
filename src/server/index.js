@@ -1,12 +1,19 @@
 import Koa from 'koa';
 import Router from 'koa-router';
 import Loadable from 'react-loadable';
-import config from '../../config/index';
+import proxy from 'koa-proxies';
+import config from '../../config/index'
 import loadData from './renderStatic/loadData';
 import render from './renderStatic/render';
 
 
 const app = new Koa();
+
+
+app.use(proxy('/api', {
+  target: config.service["/api"],
+  logs: true,
+}));
 
 app.use(require('koa-static')(config.staticPath), {
   // maxage: 60 * 60 * 24
@@ -25,7 +32,7 @@ app.use(router.routes())
   .use(router.allowedMethods());
 
 Loadable.preloadAll().then(() => {
-  app.listen(80, () => {
-    console.log('app is starting at 80');
+  app.listen(9527, () => {
+    console.log('app is starting at 9527');
   })
 })
