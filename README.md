@@ -22,7 +22,7 @@ react SSR
 支持：
 1. 支持redux数据流。
 
-2. webpack支持静态资源，字体，图片，支持Less、source-map、支持code spliting, 支持js, css按需加载，支持webpack DLL
+2. webpack支持静态资源，字体，图片，支持Less的打包、支持source-map、支持code spliting, 支持js, css按需加载，支持webpack DLL
 
 
 遇到的坑：
