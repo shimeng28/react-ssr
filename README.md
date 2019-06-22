@@ -50,6 +50,8 @@ react SSR
 
 2. webpack支持静态资源，字体，图片，支持Less的打包、支持source-map、支持code spliting, 支持js, css按需加载，支持webpack DLL
 
+3. 添加eslint校验，并且添加了git commit hooks
+
 
 遇到的坑：
 MiniCssExtractPlugin 在服务端会报错，document未定义。解决方法： 写一个子类继承MiniCssExtractPlugin，重写 getCssChunkObject方法
