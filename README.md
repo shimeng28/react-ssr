@@ -39,8 +39,7 @@ react SSR
 5. 浏览器端代码会在ComponentDidMount检查，页面数据不存在时会再次请求。这是因为只有第一次页面请求是SSR渲染，之后在浏览器中的跳转都是单页应用的形式
 
 6. css有两种解决方案，一种是server端打包的时候通过isomorphic-style-loader处理CSS，之后可以通过_getCss方法获取CSS字符串，将css字符串赋值给
-   context，之后在node返回给前端的时候注入到html中。另一种是通过MiniCssExtractPlugin将CSS抽离出单独到文件，在服务端将Css以link的形式注入到使用HtmlWebpackPlugin生成的html文件中并返回给前端。
-   html模版文件中。
+   context，之后在node返回给前端的时候注入到html中。另一种是通过MiniCssExtractPlugin将CSS抽离出单独到文件，在服务端将Css以link的形式注入到使用HtmlWebpackPlugin生成的html文件中并返回给前端。这里使用的是第二种。
    
 7.  使用react-loadable实现按需加载，将分割的代码文件css文件以link， js通过script的方式插入到html中。在浏览器中会通过jsonp的方式加载代码。
     
