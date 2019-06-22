@@ -16,14 +16,12 @@ const readFile = async (path, opt = {}) => {
   });
 };
 
-const removeFile = async (path) => {
-  return new Promise((resolve, reject) => {
-    fs.unlink(path, (err) => {
-      if (err) reject(false);
-      resolve(true);
-    })
+const removeFile = async path => new Promise((resolve, reject) => {
+  fs.unlink(path, (err) => {
+    if (err) reject(false);
+    resolve(true);
   });
-}
+});
 
 export default {
   readFile,

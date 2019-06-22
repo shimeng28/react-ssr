@@ -11,21 +11,20 @@ const loadData = async (ctx, next) => {
   ctx.store = store;
 
 
-  const matchedRoutes = matchRoutes(routes, ctx.path).map(({ route }) => !route.component.preload ? route.component : route.component.preload().then(res => res.default));
+  const matchedRoutes = matchRoutes(routes, ctx.path).map(({ route }) => (!route.component.preload
+    ? route.component
+    : route.component.preload().then(res => res.default)));
 
   const loadedActions = await Promise.all(matchedRoutes);
-  const promises = loadedActions.map(component => {
-    const promise = new Promise((resolve, reject) => {
-      component.loadData
-      ? component.loadData(store).then(resolve).catch(resolve)
-      : resolve()
-    });
+  const promises = loadedActions.map((component) => {
+    const promise = new Promise(resolve => (component.loadData
+      ? component.loadData(store).then(resolve).catch(resolve) : resolve()));
     return promise;
   });
 
 
   await Promise.all(promises);
   next();
-}
+};
 
 export default loadData;

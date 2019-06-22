@@ -1,19 +1,34 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from 'Components/Header';
 import { renderRoutes } from 'react-router-config';
-import styles from './index.less';
-// import withStyle from '../../withStyle';
+import './index.less';
 
 const App = (props) => {
+  const { staticContext, route } = props;
   return (
     <div>
-      <Header staticContext={ props.staticContext }/>
+      <Header staticContext={staticContext} />
       {
-        renderRoutes(props.route.routes)
+        renderRoutes(route.routes)
       }
     </div>
   );
-}
+};
+
+App.propTypes = {
+  staticContext: PropTypes.shape({}),
+  route: PropTypes.shape({
+    route: PropTypes.array,
+  }),
+};
+
+App.defaultProps = {
+  staticContext: null,
+  route: {
+    route: [],
+  },
+};
 
 // export default withStyle(App, styles);
 export default App;

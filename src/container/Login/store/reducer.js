@@ -1,16 +1,15 @@
-import { CHANGE_LIST } from './contants';
+import { CHANGE_LOGIN_STATUS } from './contants';
 
 const defaultState = {
-  name: '小时哥',
-  newsList: [],
+  isLogin: false,
 };
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case CHANGE_LIST: {
+    case CHANGE_LOGIN_STATUS: {
       const newState = {
         ...state,
-        newsList: action.list,
+        isLogin: action.status,
       };
       return newState;
     }

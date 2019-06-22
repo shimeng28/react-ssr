@@ -1,64 +1,65 @@
 const path = require('path');
 const fs = require('fs');
+
 const isProduction = process.env.NODE_ENV === 'production';
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const reactLoadablePlugin = require('react-loadable/webpack').ReactLoadablePlugin;
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { ReactLoadablePlugin } = require('react-loadable/webpack');
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
 
 const config = {
   entry: './src/client/index.js',
   output: {
     filename: 'index.js',
-    path: path.resolve(process.cwd(), './build/client')
+    path: path.resolve(process.cwd(), './build/client'),
   },
   module: {
     rules: [
       {
         test: /\.(less|css)$/,
-        use: [ 
+        use: [
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
               hmr: !isProduction,
               reloadAll: true,
-            }
+            },
           },
           {
             loader: 'css-loader',
             options: {
               importLoaders: 2,
               modules: true,
-              localIdentName: '[local]--[hash:base64:5]'
-            }
+              localIdentName: '[local]--[hash:base64:5]',
+            },
           },
           'postcss-loader',
-          'less-loader'
-        ]
+          'less-loader',
+        ],
       },
     ],
-  }, 
+  },
   plugins: [
     new MiniCssExtractPlugin({
       filename: isProduction ? '[name].[hash].css' : '[name].css',
-      chunkFilename: isProduction ? '[id].[hash].css' : '[id].css'
+      chunkFilename: isProduction ? '[id].[hash].css' : '[id].css',
     }),
     new HtmlWebpackPlugin({
       filename: '~tmp.html',
       template: path.resolve(process.cwd(), './public/index.html'),
       favicon: path.resolve(process.cwd(), './public/favicon.ico'),
-      chunks: [ 'main' ]
+      chunks: ['main'],
     }),
-    new reactLoadablePlugin({
+    new ReactLoadablePlugin({
       filename: path.resolve(process.cwd(), './public/react-loadable.json'),
     }),
   ],
 };
-const plugins = config.plugins;
+const { plugins } = config;
 const files = fs.readdirSync(path.resolve(process.cwd(), './build/dll'));
 
-files.forEach(file => {
+files.forEach((file) => {
   if (/\.dll\.js$/.test(file)) {
     plugins.push(new AddAssetHtmlWebpackPlugin({
       filepath: path.resolve(process.cwd(), './build/dll', file),

@@ -1,11 +1,9 @@
 const path = require('path');
 const merge = require('webpack-merge');
-
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
-
 const clientConfig = require('./webpack.client.js');
 const serverConfig = require('./webpack.server.js');
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 const makePlugins = () => {
@@ -13,7 +11,7 @@ const makePlugins = () => {
     new CleanWebpackPlugin({
       verbose: true,
       cleanOnceBeforeBuildPatterns: ['**/*'],
-    })
+    }),
   ];
 
   return plugins;
@@ -38,12 +36,12 @@ const commonConfig = {
               name: isProduction ? '[hash].[ext]' : '[name].[ext]',
               limit: 8192,
               outputPath: 'assert',
-            }
-          }
-        ]
-      }
+            },
+          },
+        ],
+      },
     ],
-  }, 
+  },
   plugins: makePlugins(),
   resolve: {
     alias: {
@@ -51,19 +49,19 @@ const commonConfig = {
       Components: path.resolve(process.cwd(), './src/components/'),
       Container: path.resolve(process.cwd(), './src/container/'),
     },
-    mainFiles: [ 'index' ],
-    extensions: [ '.js', '.jsx' ],
-  }
+    mainFiles: ['index'],
+    extensions: ['.js', '.jsx'],
+  },
 };
 
 if (!isProduction) {
   commonConfig.optimization = {
-    usedExports: true
+    usedExports: true,
   };
 }
 
 
-module.exports = env => {
+module.exports = (env) => {
   console.log(env);
   const isClient = env.side === 'client';
 
@@ -71,4 +69,4 @@ module.exports = env => {
     return merge(commonConfig, clientConfig);
   }
   return merge(commonConfig, serverConfig);
-}
+};

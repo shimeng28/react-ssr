@@ -9,19 +9,17 @@ import routes from '../routes';
 
 const store = getClientStore();
 
-const App = () => {
-  return (
-    <Provider store={ store } >
-      <BrowserRouter>
-        <div>
-          { 
-            renderRoutes(routes)
-          }
-        </div>
-      </BrowserRouter>
-    </Provider>
-  );
-};
+const App = () => (
+  <Provider store={store}>
+    <BrowserRouter>
+      <div>
+        {
+          renderRoutes(routes)
+        }
+      </div>
+    </BrowserRouter>
+  </Provider>
+);
 
 Loadable.preloadReady().then(() => {
   hydrate(<App />, document.getElementById('root'));

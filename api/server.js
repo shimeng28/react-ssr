@@ -5,18 +5,29 @@ const app = new Koa();
 
 const router = new Router();
 
-router.get('/api/list.json', async (ctx, next) => {
+const mockList = [
+  {
+    id: 1,
+    title: 'aaa',
+  },
+  {
+    id: 2,
+    title: 'bbb',
+  },
+];
+router.get('/api/lists.json', async (ctx) => {
   ctx.body = JSON.stringify({
-    data: [
-      {
-        id: 1,
-        title: 'aaa',
-     },
-     {
-       id: 2,
-       title: 'bbb'
-     }
-    ],
+    data: mockList,
+    message: 'ok',
+    success: true,
+  });
+});
+
+let login = false;
+router.get('/api/login.json', async (ctx) => {
+  login = !login;
+  ctx.body = JSON.stringify({
+    data: login,
     message: 'ok',
     success: true,
   });
@@ -28,4 +39,4 @@ app.use(router.routes())
 
 app.listen(3000, () => {
   console.log('service is starting at 3000');
-})
+});

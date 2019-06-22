@@ -1,18 +1,20 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import { reducer as homeReducer } from 'Container/Home/store';
+import homeReducer from 'Container/Home/store';
+import loginReducer from 'Container/Login/store';
 
 import ClientAxios from '../client/request';
 import ServerAxios from '../server/request';
 
 const reducer = combineReducers({
   home: homeReducer,
+  login: loginReducer,
 });
 
-export const getStore = (ctx) => {
-  // 服务器端store端内容，使用serverAxios
-  return createStore(reducer, applyMiddleware(thunk.withExtraArgument(ServerAxios(ctx))));
-};
+// 服务器端store端内容，使用serverAxios
+export const getStore = ctx => createStore(reducer,
+  applyMiddleware(thunk.withExtraArgument(ServerAxios(ctx))));
+
 
 export const getClientStore = () => {
   const defaultState = window.context.state;

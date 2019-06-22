@@ -28,13 +28,11 @@ export default [
   {
     path: '/',
     component: WrapApp,
-    // loadData: WrapApp.loadData,
     routes: [
       {
         path: '/',
         component: WrapHome,
         exact: true,
-        // loadData: WrapHome.loadData,
         key: 'home',
       },
       {
@@ -44,8 +42,8 @@ export default [
         key: 'login',
       },
       {
-        component: WrapNotFound
-      }
-    ]
-  }
+        component: WrapNotFound,
+      },
+    ],
+  },
 ];

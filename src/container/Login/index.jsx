@@ -1,44 +1,60 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { getLogin } from './store/actions';
 import styles from './index.less';
-// import withStyles from '../../withStyle';
 
-class Login extends Component {
+class Login extends PureComponent {
+  static propTypes = {
+    isLogin: PropTypes.bool,
+    getLoginStatus: PropTypes.func,
+  };
+
+  static defaultProps = {
+    isLogin: undefined,
+    getLoginStatus: () => {},
+  };
+
   componentDidMount() {
-    console.log('aaaa');
-    // if (!this.props.list.length) {
-    //   this.props.getHomeList();
-    // }
+    const { isLogin, getLoginStatus } = this.props;
+    if (typeof isLogin === 'undefined') {
+      getLoginStatus();
+    }
   }
 
-
   render() {
+    const { isLogin } = this.props;
     return (
       <div>
         <Helmet>
           <title>这是登陆页</title>
         </Helmet>
-        <h1 
-          className={styles.name}
-          onClick={ () => console.log('aaa') }
-        >这是登陆页</h1>
+        <h1 className={styles.name}>这是登陆页</h1>
+        <p className={styles.status}>
+          {
+            isLogin
+              ? '您已登陆'
+              : '您未登陆'
+          }
+        </p>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-
+  isLogin: state.login.isLogin,
 });
 
 const mapDispatchToProps = dispatch => ({
+  getLoginStatus() {
+    dispatch(getLogin());
+  },
 });
 
-// const ExportLogin = connect(mapStateToProps, mapDispatchToProps)(withStyles(Login, styles));
-const ExportLogin = connect(mapStateToProps, mapDispatchToProps)(Login);
-// ExportLogin.loadData = (store) => {
 
-// };
+const ExportLogin = connect(mapStateToProps, mapDispatchToProps)(Login);
+ExportLogin.loadData = store => store.dispatch(getLogin());
 
 export default ExportLogin;
