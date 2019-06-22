@@ -2,21 +2,26 @@
 react SSR
 
 使用:
-  git clone git@github.com:shimeng28/react-ssr.git
-  npm install
-  npm run postinstall
-  npm run dev
-  浏览器打开 http://localhost:9527/
+  第一次：
+
+  1. git clone git@github.com:shimeng28/react-ssr.git
+  2. npm install
+  3. npm run postinstall
+  4. npm run dev-build
+  5. npm run dev
+  6. 浏览器打开 http://localhost:9527/
+
+  之后每次需要执行 npm run dev命令即可
 
 目录作用：
-  /api/ API接口实现目录
-  /build/ 编译代码目录
-    /build/client/ 客户端代码
-    /build/dll/ dll文件
-    /build/server/ 服务端代码
-  /config/ 配置文件目录
-  /src/ 源代码目录
-  /webpack/ webpack打包构建文件
+  1. /api/ API接口实现目录
+  2. /build/ 编译代码目录
+    1. /build/client/ 客户端代码
+    2. /build/dll/ dll文件
+    3. /build/server/ 服务端代码
+  3. /config/ 配置文件目录
+  4. /src/ 源代码目录
+  5. /webpack/ webpack打包构建文件
 
 技术栈 webpack + React + react-router + Redux + Redux-thunk + axios + koa2
 
