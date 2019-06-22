@@ -16,9 +16,11 @@ react SSR
 目录作用：
   1. /api/ API接口实现目录
   2. /build/ 编译代码目录
+  
     1. /build/client/ 客户端代码
     2. /build/dll/ dll文件
     3. /build/server/ 服务端代码
+  
   3. /config/ 配置文件目录
   4. /src/ 源代码目录
   5. /webpack/ webpack打包构建文件
