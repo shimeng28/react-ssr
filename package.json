@@ -22,7 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
-    "axios": "^0.19.0",
+    "axios": "^0.21.2",
     "koa": "^2.7.0",
     "koa-proxies": "^0.8.1",
     "koa-router": "^7.4.0",
