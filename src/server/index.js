@@ -29,7 +29,7 @@ app.use(router.routes())
   .use(router.allowedMethods());
 
 Loadable.preloadAll().then(() => {
-  app.listen(9527, () => {
-    console.log('app is starting at 9527');
+  app.listen(config.staticPort, () => {
+    console.log(`app is starting at ${config.staticPort}`);
   });
 });

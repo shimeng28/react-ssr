@@ -1,18 +1,21 @@
 {
   "name": "react-ssr",
   "version": "1.0.0",
-  "sideEffects": "*.css",
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "cp .hooks/* .git/hooks/",
     "dev-build": "npm run build:dll",
     "dev": "concurrently \"npm run dev:service\" \"npm run dev:build:client\" \"npm run dev:build:server\"  \"npm run dev:start\" ",
     "dev:start": "nodemon --inspect --watch src --exec node \"./build/server/bundle.js\"",
     "dev:build:server": "webpack --config ./webpack/webpack.common.js --env.side=server --watch",
     "dev:build:client": "webpack --config ./webpack/webpack.common.js --env.side=client --watch",
     "dev:service": "nodemon ./api/server.js",
-    "build:dll": "webpack --config ./webpack/webpack.dll.config.js"
+    "build:dll": "webpack --config ./webpack/webpack.dll.config.js",
+    "lint": "eslint -c .eslintrc.js --fix ./src ./webpack/*.js"
   },
   "keywords": [],
   "author": "",
