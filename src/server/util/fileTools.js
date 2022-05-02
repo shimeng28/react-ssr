@@ -16,8 +16,9 @@ const readFile = async (path, opt = {}) => {
   });
 };
 
-const removeFile = async path => new Promise((resolve, reject) => {
+const removeFile = async (path) => new Promise((resolve, reject) => {
   fs.unlink(path, (err) => {
+    // eslint-disable-next-line prefer-promise-reject-errors
     if (err) reject(false);
     resolve(true);
   });

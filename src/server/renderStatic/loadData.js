@@ -1,5 +1,6 @@
+/* eslint-disable no-promise-executor-return */
 import { matchRoutes } from 'react-router-config';
-import { getStore } from 'Store/index';
+import { getStore } from '../../store';
 import routes from '../../routes';
 
 const loadData = async (ctx, next) => {
@@ -10,18 +11,16 @@ const loadData = async (ctx, next) => {
   const store = getStore(ctx, next);
   ctx.store = store;
 
-
   const matchedRoutes = matchRoutes(routes, ctx.path).map(({ route }) => (!route.component.preload
     ? route.component
-    : route.component.preload().then(res => res.default)));
+    : route.component.preload().then((res) => res.default)));
 
   const loadedActions = await Promise.all(matchedRoutes);
   const promises = loadedActions.map((component) => {
-    const promise = new Promise(resolve => (component.loadData
+    const promise = new Promise((resolve) => (component.loadData
       ? component.loadData(store).then(resolve).catch(resolve) : resolve()));
     return promise;
   });
-
 
   await Promise.all(promises);
   next();

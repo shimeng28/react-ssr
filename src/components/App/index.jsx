@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Header from 'Components/Header';
 import { renderRoutes } from 'react-router-config';
+import Header from '../Header';
 import './index.less';
 
-const App = (props) => {
+function App(props) {
   const { staticContext, route } = props;
   return (
     <div>
@@ -14,12 +14,17 @@ const App = (props) => {
       }
     </div>
   );
-};
+}
 
 App.propTypes = {
   staticContext: PropTypes.shape({}),
   route: PropTypes.shape({
-    route: PropTypes.array,
+    routes: PropTypes.arrayOf(PropTypes.shape({
+      path: PropTypes.string,
+      component: PropTypes.func,
+      exact: PropTypes.bool,
+      key: PropTypes.string.isRequired,
+    })),
   }),
 };
 

@@ -6,16 +6,6 @@ import { getLogin } from './store/actions';
 import styles from './index.less';
 
 class Login extends PureComponent {
-  static propTypes = {
-    isLogin: PropTypes.bool,
-    getLoginStatus: PropTypes.func,
-  };
-
-  static defaultProps = {
-    isLogin: undefined,
-    getLoginStatus: () => {},
-  };
-
   componentDidMount() {
     const { isLogin, getLoginStatus } = this.props;
     if (typeof isLogin === 'undefined') {
@@ -43,18 +33,27 @@ class Login extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+Login.propTypes = {
+  isLogin: PropTypes.bool,
+  getLoginStatus: PropTypes.func,
+};
+
+Login.defaultProps = {
+  isLogin: undefined,
+  getLoginStatus: () => {},
+};
+
+const mapStateToProps = (state) => ({
   isLogin: state.login.isLogin,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getLoginStatus() {
     dispatch(getLogin());
   },
 });
 
-
 const ExportLogin = connect(mapStateToProps, mapDispatchToProps)(Login);
-ExportLogin.loadData = store => store.dispatch(getLogin());
+ExportLogin.loadData = (store) => store.dispatch(getLogin());
 
 export default ExportLogin;

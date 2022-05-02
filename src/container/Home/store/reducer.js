@@ -5,7 +5,7 @@ const defaultState = {
   newsList: [],
 };
 
-export default (state = defaultState, action) => {
+export default (state, action) => {
   switch (action.type) {
     case CHANGE_LIST: {
       const newState = {
@@ -15,6 +15,6 @@ export default (state = defaultState, action) => {
       return newState;
     }
     default:
-      return state;
+      return defaultState;
   }
 };

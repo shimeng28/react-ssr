@@ -6,10 +6,9 @@ react SSR
 
   1. git clone git@github.com:shimeng28/react-ssr.git
   2. npm install
-  3. npm run postinstall
-  4. npm run dev-build
-  5. npm run dev
-  6. 浏览器打开 http://localhost:9527/
+  3. npm run dev-build
+  4. npm run dev
+  5. 浏览器打开 http://localhost:9527/
 
   之后每次需要执行 npm run dev命令即可
 

@@ -24,7 +24,15 @@ const commonConfig = {
     rules: [
       {
         test: /\.(js|jsx)?$/,
-        use: 'babel-loader',
+        use: [
+          'babel-loader',
+          {
+            loader: 'eslint-loader',
+            options: {
+              fix: true,
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
       {
@@ -45,9 +53,8 @@ const commonConfig = {
   plugins: makePlugins(),
   resolve: {
     alias: {
-      Store: path.resolve(process.cwd(), './src/store/'),
-      Components: path.resolve(process.cwd(), './src/components/'),
-      Container: path.resolve(process.cwd(), './src/container/'),
+      styles: path.resolve(process.cwd(), 'src/assets/styles'),
+      images: path.resolve(process.cwd(), 'src/assets/images'),
     },
     mainFiles: ['index'],
     extensions: ['.js', '.jsx'],
@@ -62,7 +69,6 @@ if (!isProduction) {
 
 
 module.exports = (env) => {
-  console.log(env);
   const isClient = env.side === 'client';
 
   if (isClient) {

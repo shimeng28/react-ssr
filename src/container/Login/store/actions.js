@@ -1,6 +1,6 @@
 import { CHANGE_LOGIN_STATUS } from './contants';
 
-const changeLoginStatus = status => ({
+const changeLoginStatus = (status) => ({
   type: CHANGE_LOGIN_STATUS,
   status,
 });

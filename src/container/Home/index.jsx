@@ -7,21 +7,6 @@ import styles from './index.less';
 
 // 同构 一套React代码，在服务端执行一次，再在客户端执行一次
 class Home extends PureComponent {
-  static propTypes = {
-    list: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-    })),
-    getHomeList: PropTypes.func,
-    name: PropTypes.string,
-  };
-
-  static defaultProps = {
-    list: [],
-    getHomeList: () => {},
-    name: '',
-  }
-
   componentDidMount() {
     const { list, getHomeList: getList } = this.props;
     if (!list.length) {
@@ -32,9 +17,9 @@ class Home extends PureComponent {
   getList() {
     const { list } = this.props;
     return (
-      <React.Fragment>
+      <>
         {
-          list.map(item => (
+          list.map((item) => (
             <div key={item.id}>
               { item.id }
               ::
@@ -42,7 +27,7 @@ class Home extends PureComponent {
             </div>
           ))
         }
-      </React.Fragment>
+      </>
     );
   }
 
@@ -65,12 +50,27 @@ class Home extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+Home.propTypes = {
+  list: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+  })),
+  getHomeList: PropTypes.func,
+  name: PropTypes.string,
+};
+
+Home.defaultProps = {
+  list: [],
+  getHomeList: () => {},
+  name: '',
+};
+
+const mapStateToProps = (state) => ({
   name: state.home.name,
   list: state.home.newsList,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getHomeList() {
     dispatch(getHomeList());
   },
@@ -79,6 +79,6 @@ const mapDispatchToProps = dispatch => ({
 // const ExportHome = connect(mapStateToProps, mapDispatchToProps)(withStyles(Home, styles));
 const ExportHome = connect(mapStateToProps, mapDispatchToProps)(Home, styles);
 // loadData负责在服务器端渲染之前，把这个路由需要端数据提前加载好
-ExportHome.loadData = store => store.dispatch(getHomeList());
+ExportHome.loadData = (store) => store.dispatch(getHomeList());
 
 export default ExportHome;

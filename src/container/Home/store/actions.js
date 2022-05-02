@@ -1,10 +1,9 @@
 import { CHANGE_LIST } from './contants';
 
-const changeList = list => ({
+const changeList = (list) => ({
   type: CHANGE_LIST,
   list,
 });
-
 
 export const getHomeList = () => (dispatch, getState, axiosInstance) => axiosInstance.get('/api/lists.json')
   .then((res) => {

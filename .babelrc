@@ -1,5 +1,6 @@
 {
   "presets": [
+    [ "@babel/preset-react" ],
     [ 
       "@babel/preset-env",
       {
@@ -11,13 +12,15 @@
           "safari": "11.1"
         },
         "useBuiltIns": "usage",
-        "corejs": 2
+        "corejs": 3
       }
-    ],
-    [ "@babel/preset-react" ]
+    ]
   ],
   "plugins": [ 
-    "@babel/plugin-proposal-class-properties",
+    "lodash",
+    "@babel/plugin-transform-runtime",
+    ["@babel/plugin-proposal-decorators", { "legacy": true }], // decorator
+    ["@babel/plugin-proposal-class-properties", { "loose": true }], // class static propertyx
     "@babel/plugin-syntax-dynamic-import",
     "react-loadable/babel"
   ]

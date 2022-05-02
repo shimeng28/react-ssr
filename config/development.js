@@ -6,7 +6,7 @@ const config = {
   staticPort: 9527,
   service: {
     '/api': 'http://127.0.0.1:3000',
-  }
+  },
 };
 
 export default config;

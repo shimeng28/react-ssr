@@ -6,7 +6,6 @@ import config from '../../config/index';
 import loadData from './renderStatic/loadData';
 import render from './renderStatic/render';
 
-
 const app = new Koa();
 
 app.use(proxy('/api', {

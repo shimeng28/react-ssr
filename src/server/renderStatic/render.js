@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack';
@@ -10,7 +11,6 @@ import config from '../../../config/index';
 import fileTools from '../util/fileTools';
 import routes from '../../routes';
 import stats from '../../../public/react-loadable.json';
-
 
 const getHtml = async ({
   helmetData,
@@ -33,7 +33,7 @@ const render = async (ctx) => {
   };
   const content = renderToString((
     <Loadable.Capture
-      report={moduleName => context.modules.push(moduleName)}
+      report={(moduleName) => context.modules.push(moduleName)}
     >
       <Provider store={ctx.store}>
         <StaticRouter location={ctx.path} context={context}>
@@ -48,8 +48,8 @@ const render = async (ctx) => {
   ));
 
   const bundles = getBundles(stats, context.modules);
-  const cssList = bundles.filter(bundle => /\.css$/.test(bundle.file));
-  const jsList = bundles.filter(bundle => /\.js$/.test(bundle.file));
+  const cssList = bundles.filter((bundle) => /\.css$/.test(bundle.file));
+  const jsList = bundles.filter((bundle) => /\.js$/.test(bundle.file));
   const helmet = Helmet.renderStatic();
   // 当使用isomorphic-style-loader 可以使用_getCss()获取CSS字符串
   // const cssStr = context.css.length ? context.css.join('\n') : '';
@@ -57,7 +57,7 @@ const render = async (ctx) => {
   const helmetData = `
     ${helmet.title.toString()}
     ${helmet.meta.toString()}
-    ${cssList.map(bundle => `<link rel="stylesheet" type="text/css" href="/${bundle.file}" />`).join('')}
+    ${cssList.map((bundle) => `<link rel="stylesheet" type="text/css" href="/${bundle.file}" />`).join('')}
   `;
   const injectData = `
     <script>
@@ -65,9 +65,8 @@ const render = async (ctx) => {
         state: ${JSON.stringify(ctx.store.getState())}
       };
     </script>
-    ${jsList.map(bundle => `<script src="/${bundle.file}"></script>`).join('')}
+    ${jsList.map((bundle) => `<script src="/${bundle.file}"></script>`).join('')}
   `;
-
 
   if (context.action === 'REPLACE') {
     ctx.redirect(301, context.url);

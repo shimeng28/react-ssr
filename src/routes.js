@@ -1,28 +1,28 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import Loadable from 'react-loadable';
 
 const loading = () => <div>Loading...</div>;
 
 const WrapApp = Loadable({
-  loader: () => import('Components/App'),
+  loader: () => import('./components/App'),
   loading,
 });
 
 const WrapHome = Loadable({
-  loader: () => import('Container/Home'),
+  loader: () => import('./container/Home'),
   loading,
 });
 
 const WrapLogin = Loadable({
-  loader: () => import('Container/Login'),
+  loader: () => import('./container/Login'),
   loading,
 });
 
 const WrapNotFound = Loadable({
-  loader: () => import('Container/NotFound'),
+  loader: () => import('./container/NotFound'),
   loading,
 });
-
 
 export default [
   {
